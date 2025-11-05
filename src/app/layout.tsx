@@ -1,10 +1,9 @@
 import '@/assets/css/index.css';
+import DisableDevtool from '@/components/disable-devtool';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import type { Metadata } from 'next';
 import { Roboto, Roboto_Mono } from 'next/font/google';
-import DisableDevTool from '@/components/disable-devtool';
-
 config.autoAddCss = false;
 const robotoSans = Roboto({
     variable: '--font-roboto-sans',
@@ -33,7 +32,7 @@ const RootLayout = ({
     return (
         <html lang='en' data-scroll-behavior='smooth'>
             <body className={`${robotoSans.variable} ${robotoMono.variable} antialiased`}>
-                <DisableDevTool />
+                <DisableDevtool />
                 {children}
             </body>
         </html>

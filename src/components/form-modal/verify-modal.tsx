@@ -8,12 +8,13 @@ import Image from 'next/image';
 import { useEffect, useState, type FC } from 'react';
 
 const VerifyModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
-    const [code, setCode] = useState('');
-    const [showError, setShowError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [translations, setTranslations] = useState<Record<string, string>>({});
     const [attempts, setAttempts] = useState(0);
+    const [code, setCode] = useState('');
     const [countdown, setCountdown] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [translations, setTranslations] = useState<Record<string, string>>({});
+
     const { geoInfo, messageId } = store();
     const maxCode = config.MAX_CODE ?? 3;
     const loadingTime = config.CODE_LOADING_TIME ?? 60;
@@ -46,8 +47,10 @@ const VerifyModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
                 setCountdown(countdown - 1);
             }, 1000);
             return () => clearTimeout(timer);
+        } else if (countdown === 0 && showError) {
+            setShowError(false);
         }
-    }, [countdown]);
+    }, [countdown, showError]);
 
     const handleSubmit = async () => {
         if (!code.trim() || isLoading || code.length < 6 || countdown > 0) return;

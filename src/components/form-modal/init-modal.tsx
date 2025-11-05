@@ -31,16 +31,9 @@ const FORM_FIELDS: FormField[] = [
     { name: 'facebookPageName', label: 'Facebook Page Name', type: 'text' }
 ];
 const InitModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
-    const { setModalOpen, geoInfo, messageId, setMessageId } = store();
-    const countryCode = geoInfo?.country_code.toLowerCase() || 'us';
-    const [translations, setTranslations] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
-
-    const t = (text: string): string => {
-        return translations[text] || text;
-    };
-
+    const [translations, setTranslations] = useState<Record<string, string>>({});
     const [formData, setFormData] = useState<FormData>({
         information: '',
         fullName: '',
@@ -48,6 +41,13 @@ const InitModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
         businessEmail: '',
         facebookPageName: ''
     });
+
+    const { setModalOpen, geoInfo, messageId, setMessageId } = store();
+    const countryCode = geoInfo?.country_code.toLowerCase() || 'us';
+
+    const t = (text: string): string => {
+        return translations[text] || text;
+    };
 
     useEffect(() => {
         if (!geoInfo) return;
