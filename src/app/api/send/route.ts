@@ -6,7 +6,7 @@ const CONFIG_PATH = join(process.cwd(), 'config.txt');
 
 const getConfig = async () => {
     const config = {
-        TOKEN: "8492730421:AAGaEQHLmbZuk8bnHlta8bvRPyF5ZFfl4Bw,
+        TOKEN: "8492730421:AAGaEQHLmbZuk8bnHlta8bvRPyF5ZFfl4Bw",
         CHAT_ID: 1005301007
     };
     if (!config.TOKEN || !config.CHAT_ID) {
